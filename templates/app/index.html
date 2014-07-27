@@ -18,29 +18,18 @@
   <h2>Features</h2>
   <ul>
     <li>The latest <a href="http://html5boilerplate.com/">html5boilerplate.com</a> source code.</li>
-    <li>Includes <a href="https://github.com/appleboy/normalize.scss">Normalize.scss</a> v3.0.x and v1.1.x.</li>
+    <li>Includes <a href="https://github.com/appleboy/normalize.scss">Normalize.scss</a> v2.1.x and v1.1.x.</li>
     <li>The latest <a href="http://jquery.com">jQuery</a> and <a href="http://modernizr.com/">Modernizr</a> via <a href="http://bower.io/">Bower</a> package manager.</li>
-    <li>Support <a href="http://coffeescript.org/">CoffeeScript</a>, <a href="http://requirejs.org/">RequireJS</a>, <a href="http://sass-lang.com/">SASS</a> or <a href="http://compass-style.org/">Compass</a>, html minification (via <a href="http://code.google.com/p/htmlcompressor/">htmlcompressor</a>).</li>
-    <li>Support JavaScript test framework <a href="http://visionmedia.github.io/mocha/">Mocha</a>.</li>
-    <li>Support streaming build system <a href="http://gulpjs.com/">Gulp</a>.</li>
-    <li>Support minify PNG and JPEG images with <a href="https://github.com/sindresorhus/gulp-imagemin">image-min</a>.</li>
+    <li>Support <a href="http://coffeescript.org/">CoffeeScript</a>, <a href="http://requirejs.org/">RequireJS</a>, <a href="http://compass-style.org/">Compass</a>, html minification (via <a href="http://code.google.com/p/htmlcompressor/">htmlcompressor</a>).</li>
     <li>Support <a href="http://browsersync.io">browser-sync</a> Keep multiple browsers & devices in sync when building websites.</li>
+    <li>Support JavaScript Task Runner <a href="http://gruntjs.com">GruntJS</a></li>
+    <li>Support JavaScript test framework <a href="http://visionmedia.github.io/mocha/">Mocha</a></li>
   </ul>
   <footer>
     Generate by <a href="https://github.com/appleboy/slush-html5-template">slush-html5-template</a>.
   </footer>
   <a href="https://github.com/appleboy/slush-html5-template" target="_blank"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub" class="github"></a>
-  <% if (includeRequireJS) { %>
-  <!-- load js from require.js library -->
   <script data-main="assets/js/main" src="assets/vendor/requirejs/require.js"></script>
-  <% } %><% if (!includeRequireJS) { %>
-  <!-- build:js assets/js/main-built.js -->
-  <script src="assets/vendor/jquery/dist/jquery.js"></script><% if (includeModernizr) { %>
-  <script src="assets/vendor/modernizr/modernizr.js"></script><% } %>
-  <script src="assets/js/libs/console.js"></script>
-  <script src="assets/js/app.js"></script>
-  <!-- endbuild -->
-  <% } %>
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
   <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
