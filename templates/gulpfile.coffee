@@ -1,7 +1,7 @@
 'use strict'
 
-gulp = require 'gulp'<% if (includeRequireJS) { %>
-rjs = require 'requirejs'<% } %>
+gulp = require 'gulp'
+rjs = require 'requirejs'
 runs = require 'run-sequence'
 $ = require('gulp-load-plugins')()
 minifyCSS = require 'gulp-minify-css'
@@ -21,6 +21,7 @@ paths =
   test: 'test'
   dist: 'dist'
   vendor: 'app/assets/vendor'
+  hbs: 'app/assets/templates'
 
 coffeelintTasks = lazypipe()
   .pipe $.coffeelint
@@ -43,20 +44,12 @@ gulp.task 'test_coffee', ->
 
 gulp.task 'html', ->
   gulp.src paths.src + '/*.html'
-    .pipe $.changed paths.dist<% if (!includeRequireJS) { %>
-    .pipe $.replace 'main-built', filename
-    .pipe $.useref.assets()
-    .pipe $.if '*.js', $.uglify()
-    .pipe $.useref.restore()
-    .pipe $.useref()
-    .pipe $.if '*.html', $.htmlmin
-      removeComments: true
-      collapseWhitespace: true<% } else { %>
+    .pipe $.changed paths.dist
     .pipe $.replace 'js/main', 'js/' + filename
     .pipe $.replace 'vendor/requirejs/require.js', 'js/require.js'
     .pipe $.htmlmin
       removeComments: true
-      collapseWhitespace: true<% } %>
+      collapseWhitespace: true
     .pipe gulp.dest paths.dist
 
 gulp.task 'styles', ->
@@ -76,10 +69,12 @@ gulp.task 'styles', ->
     .pipe gulp.dest paths.css<% } %>
     .pipe $.if production, gulp.dest paths.dist + '/assets/css/'
 
-gulp.task 'lint', ->
-  gulp.src 'gulpfile.js'
-    .pipe $.jshint()
-    .pipe $.jshint.reporter 'default'
+gulp.task 'copy', ->
+  gulp.src [
+    paths.src + '/.htaccess'
+    paths.src + '/favicon.ico'
+    paths.src + '/robots.txt']
+    .pipe gulp.dest paths.dist
 
 # Clean
 gulp.task 'clean', require('del').bind null, [
@@ -92,17 +87,11 @@ gulp.task 'clean', require('del').bind null, [
 # Images
 gulp.task 'images', ->
   gulp.src paths.images + '/**/*.{jpg,jpeg,png,gif}'
-    .pipe $.if production, $.changed paths.dist + '/assets/images'
-    .pipe $.if production, $.cache $.imagemin
+    .pipe $.changed paths.dist + '/assets/images'
+    .pipe $.cache $.imagemin
       progressive: true
       interlaced: true
-    .pipe $.if production, gulp.dest paths.dist + '/assets/images'
-
-# testing via mocha tool
-gulp.task 'test', ->
-  gulp.src paths.test + '/test.js'
-    .pipe $.mocha
-      reporter: 'spec'
+    .pipe gulp.dest paths.dist + '/assets/images'
 
 # Connect
 gulp.task 'connect:app', ->
@@ -117,26 +106,10 @@ gulp.task 'connect:app', ->
   gulp.watch paths.src + '/*.html', reload<% if (!includeCss) { %>
   gulp.watch paths.sass + '/**/*.scss', ['styles']<% } else { %>
   gulp.watch paths.css + '/**/*.css', ['styles']<% } %>
-  gulp.watch paths.images + '/**/*.{jpg,jpeg,png,gif}', ['images', reload]
   gulp.watch paths.script + '/**/*.js', reload
-  gulp.watch paths.css + '/**/*.css', reload
+  gulp.watch paths.hbs + '/**/*.hbs', reload
+  gulp.watch paths.images + '/**/*.{jpg,jpeg,png,gif}', reload
 
-# Connect
-gulp.task 'connect:dist', ->
-  browserSync
-    notify: false
-    server:
-      baseDir: [paths.dist]
-
-  gulp.watch paths.dist + '/**/*', reload
-
-gulp.task 'copy', ->
-  gulp.src [
-    paths.src + '/.htaccess'
-    paths.src + '/favicon.ico'
-    paths.src + '/robots.txt']
-    .pipe gulp.dest paths.dist
-<% if (includeRequireJS) { %>
 gulp.task 'rjs', ['build'], (cb) ->
   rjs.optimize
     baseUrl: paths.script
@@ -153,21 +126,26 @@ gulp.task 'rename', ['rjs'], ->
     .pipe gulp.dest 'dist'
   gulp.src paths.vendor + '/requirejs/require.js'
     .pipe $.uglify()
-    .pipe gulp.dest paths.dist + '/assets/js/'<% } %>
+    .pipe gulp.dest paths.dist + '/assets/js/'
+
+# testing via $.mocha tool
+gulp.task 'test', ->
+  gulp.src paths.test + '/**/*.js'
+    .pipe $.mocha
+      reporter: 'spec'
 
 # The default task (called when you run `gulp`)
 gulp.task 'default', (cb) ->
   runs(
-    ['coffee', 'styles']
+    ['coffee', 'compass']
     'connect:app'
     cb)
 
 # Build
-<% if (includeRequireJS) { %>
 gulp.task 'build', [
   'coffee'
   'images'
-  'styles'
+  'compass'
   'html'
   'copy'
 ], ->
@@ -175,20 +153,10 @@ gulp.task 'build', [
     .pipe $.size
       showFiles: true,
       gzip: true
-<% } else { %>
-gulp.task 'build', (cb) ->
-  runs([
-    'coffee'
-    'images'
-    'styles'
-    'copy']
-    'html'
-    cb)
-<% } %>
 
 gulp.task 'release', (cb) ->
   runs(
-    ['build'<% if (includeRequireJS) { %>, 'rjs', 'rename'<% } %>]
+    ['build', 'rjs', 'rename']
     cb)
 
 module.exports = gulp
