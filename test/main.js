@@ -24,7 +24,7 @@ function mockPrompt(answers) {
   };
 }
 
-describe('slush-html5-template', function() {
+describe('slush-backbone-template', function() {
   before(function () {
     process.chdir(__dirname);
     process.argv.push('--skip-install');
@@ -55,7 +55,6 @@ describe('slush-html5-template', function() {
           '.editorconfig',
           '.gitattributes',
           '.gitignore',
-          '.jshintrc',
           '.travis.yml',
           'app',
           'bower.json',
@@ -74,6 +73,9 @@ describe('slush-html5-template', function() {
           'app/assets/coffee/libs',
           'app/assets/coffee/main.coffee',
           'app/assets/coffee/libs/console.coffee',
+          'app/assets/coffee/libs/format_money.coffee',
+          'app/assets/coffee/helpers/format_money.coffee',
+          'app/assets/templates/index.hbs',
           'app/assets/sass/main.scss',
           'app/assets/sass/partials/_base.scss'
         ]);
