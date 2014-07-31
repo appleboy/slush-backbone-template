@@ -12,7 +12,7 @@ gulp.task('default', function (done) {
     type: 'input',
     name: 'name',
     message: 'Give your app a name',
-    default: 'html5-template'
+    default: 'backbone-template'
   }, {
     type: 'list',
     name: 'cssFramework',
