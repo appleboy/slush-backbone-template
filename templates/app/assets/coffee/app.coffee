@@ -12,7 +12,7 @@ define [
     data =
       title: 'Welcome to Backbone Template Engine'
       money: 556688
-    $('h1#head').html(template(data))
+    $('h1#header').html(template(data))
     if (Modernizr.canvas)
       console.info 'Your browser support canvas'
     else
