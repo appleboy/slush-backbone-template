@@ -56,8 +56,8 @@ gulp.task 'styles', ->
   gulp.src <% if (includeCss) { %>paths.css + '/**/*.css'<% } else { %>paths.sass + '/**/*.scss'<% } %><% if (!includeCss) { %>
     .pipe $.plumber()
     .pipe $.if !production, $.changed paths.css,
-      extension: '.css'<% if (includestyles) { %>
-    .pipe $.styles
+      extension: '.css'<% if (includeCompass) { %>
+    .pipe $.compass
       css: paths.css
       sass: paths.sass
       image: paths.image
