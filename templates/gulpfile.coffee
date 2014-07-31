@@ -56,8 +56,8 @@ gulp.task 'styles', ->
   gulp.src <% if (includeCss) { %>paths.css + '/**/*.css'<% } else { %>paths.sass + '/**/*.scss'<% } %><% if (!includeCss) { %>
     .pipe $.plumber()
     .pipe $.if !production, $.changed paths.css,
-      extension: '.css'<% if (includeCompass) { %>
-    .pipe $.compass
+      extension: '.css'<% if (includestyles) { %>
+    .pipe $.styles
       css: paths.css
       sass: paths.sass
       image: paths.image
@@ -137,7 +137,7 @@ gulp.task 'test', ->
 # The default task (called when you run `gulp`)
 gulp.task 'default', (cb) ->
   runs(
-    ['coffee', 'compass']
+    ['coffee', 'styles']
     'connect:app'
     cb)
 
@@ -145,7 +145,7 @@ gulp.task 'default', (cb) ->
 gulp.task 'build', [
   'coffee'
   'images'
-  'compass'
+  'styles'
   'html'
   'copy'
 ], ->
