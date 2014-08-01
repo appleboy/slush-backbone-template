@@ -5,7 +5,9 @@
     "handlebars": "~1.3.0",
     "jquery": "~2.1.1",<% if (!includeCss && includeNormalizeCSS) { %>
     "normalize-scss": "~3.0.1",<% } %><% if (includeModernizr) { %>
-    "modernizr": "~2.8.3",<% } %>
+    "modernizr": "~2.8.3",<% } %><% if (includeBootstrap) { if (includeSass || includeCompass) {%>
+    "bootstrap-sass-official": "~3.2.0",<% } else { %>
+    "bootstrap": "~3.2.0",<% }} %>
     "requirejs": "~2.1.14",
     "require-handlebars-plugin": "~0.8.1",
     "backbone": "~1.1.2",

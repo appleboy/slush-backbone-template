@@ -41,6 +41,10 @@ gulp.task('default', function (done) {
       name: 'Modernizr',
       value: 'includeModernizr',
       checked: true
+    }, {
+      name: 'Bootstrap',
+      value: 'includeBootstrap',
+      checked: true
     }]
   }, {
     type: 'confirm',
@@ -62,6 +66,7 @@ gulp.task('default', function (done) {
     answers.includeCompass = (answers.cssFramework === 'includeCompass') ? true : false;
     answers.includeNormalizeCSS = hasFeature('includeNormalizeCSS');
     answers.includeModernizr = hasFeature('includeModernizr');
+    answers.includeBootstrap = hasFeature('includeBootstrap');
 
     if (answers.includeCss) {
       src = [__dirname + '/templates/**', '!' + __dirname + '/templates/app/assets/sass/**/*']

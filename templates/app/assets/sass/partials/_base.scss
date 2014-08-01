@@ -2,3 +2,7 @@
  * import normalize css
  */<% if (includeNormalizeCSS) { %>
 @import "../../vendor/normalize-scss/_normalize.scss";<% } %>
+/*
+ * import bootstrap css
+ */<% if (includeBootstrap) { %>
+@import "../../vendor/bootstrap-sass-official/assets/stylesheets/bootstrap.scss";<% } %>
