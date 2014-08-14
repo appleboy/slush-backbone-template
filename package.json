@@ -1,7 +1,7 @@
 {
   "name": "slush-backbone-template",
   "description": "Slush generator for creating backbone template engine (RequireJS/CoffeeScript/Compass/jQuery/Mocha)",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/appleboy/slush-backbone-template",
   "author": {
     "name": "Bo-Yi Wu",
