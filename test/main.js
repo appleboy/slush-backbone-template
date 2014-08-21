@@ -56,6 +56,7 @@ describe('slush-backbone-template', function() {
           '.gitattributes',
           '.gitignore',
           '.travis.yml',
+          '.jshintrc',
           'app',
           'bower.json',
           'coffeelint.json',
