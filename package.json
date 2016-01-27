@@ -52,6 +52,6 @@
   "devDependencies": {
     "mocha": "^2.4.1",
     "mock-gulp-dest": "^0.1.0",
-    "should": "^8.2.0"
+    "should": "^8.2.1"
   }
 }
